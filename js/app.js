@@ -48,11 +48,21 @@ let deck = document.querySelector('.deck');
 for (let i of shuffledList) {
     let listItem = document.createElement('li');
 	let itemIcon = document.createElement('i');
-	listItem.setAttribute('class', 'card open show');
+	listItem.setAttribute('class', 'card');
 	itemIcon.setAttribute('class', i);
     deck.appendChild(listItem).appendChild(itemIcon);
 }
 
+/*
+*
+*
+* Make the button can be clicked
+*
+*
+* */
+(function () {
+    
+})();
 
 /*
  * set up the event listener for a card. If a card is clicked:
