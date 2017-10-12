@@ -47,7 +47,7 @@ const shuffledList = shuffle(cardList);
 const deck = document.querySelector('.deck');
 
 for (let i of shuffledList) {
-  const listItem = document.createElement('li')
+  const listItem = document.createElement('li');
   listItem.setAttribute('class', 'card');
   const itemIcon = document.createElement('i');
   itemIcon.setAttribute('class', i);
@@ -64,13 +64,25 @@ for (let i of shuffledList) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
- let cards = [];
+let cards = [];
 // Display the card's symbol
-// BUG: When click on non-item area, still add open and show class
-let showSymbol = (e) => e.target.className += ' open show';
+let showSymbol = (e) => {
+  if(e.target.className === 'deck') return;
+  e.target.className += ' open show';
+};
+
+// Add the card to a *list* of "open" cards
+let addToCards = (e) => {
+  cards.push(e.target.childNodes[0].className);
+};
+
 // set up the event listener for a card. If a card is clicked
 deck.addEventListener('click', (e) => {
-  showSymbol(e);
-  console.log(e.target.childNodes);
+	showSymbol(e);
+    addToCards(e);
 });
 
+let restart = document.querySelector('.restart');
+restart.addEventListener('click', ()=> {
+  window.location.reload();
+});
