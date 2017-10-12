@@ -72,4 +72,5 @@ let showSymbol = (e) => e.target.className += ' open show';
 deck.addEventListener('click', (e) => {
   showSymbol(e);
   console.log(e.target.childNodes);
-})
+});
+
