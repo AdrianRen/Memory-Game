@@ -64,6 +64,12 @@ for (let i of shuffledList) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+ let cards = [];
+// Display the card's symbol
+// BUG: When click on non-item area, still add open and show class
+let showSymbol = (e) => e.target.className += ' open show';
+// set up the event listener for a card. If a card is clicked
 deck.addEventListener('click', (e) => {
-  e.target.className += ' open show';
+  showSymbol(e);
+  console.log(e.target.childNodes);
 })
