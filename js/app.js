@@ -1,6 +1,7 @@
 /*
- * Create a list that holds all of your cards
- */
+* Declaration
+*/
+
 const cardList = [
   'fa fa-diamond',
   'fa fa-diamond',
@@ -18,10 +19,9 @@ const cardList = [
   'fa fa-bicycle',
   'fa fa-bomb',
   'fa fa-bomb'
-];
+],
 
-// Shuffle function from http://stackoverflow.com/a/2450976
-const shuffle = (array) => {
+      shuffle = (array) => {
   let currentIndex = array.length,
     temporaryValue, randomIndex;
 
@@ -34,7 +34,32 @@ const shuffle = (array) => {
   }
 
   return array;
-};
+},
+      // Shuffle the list of cards using the provided "shuffle" method
+      shuffledList = shuffle(cardList),
+
+      deck = document.querySelector('.deck'),
+
+      restart = document.querySelector('.restart'),
+
+	  // Display the card's symbol
+      showSymbol = (e) => {
+          if(e.target.className === 'deck') return;
+          e.target.className += ' open show';
+      },
+      // Add the card to a *list* of "open" cards
+      addToOpenedCards = (e) => {
+          let symbolClassName = e.target.childNodes[0].className;
+          openedCards.push(symbolClassName);
+      };
+
+let moves = document.querySelector('.moves'),
+
+	starts = document.querySelector('.starts'),
+
+    openedCards = [],
+
+    counter = 0;
 
 /*
  * Display the cards on the page
@@ -42,9 +67,6 @@ const shuffle = (array) => {
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-
-const shuffledList = shuffle(cardList);
-const deck = document.querySelector('.deck');
 
 for (let i of shuffledList) {
   const listItem = document.createElement('li');
@@ -56,33 +78,45 @@ for (let i of shuffledList) {
 
 /*
  * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
+ *  DONE - display the card's symbol (put this functionality in another function that you call from this one)
+ *  DONE - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
  *  - if the list already has another card, check to see if the two cards match
  *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
  *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-let cards = [];
-// Display the card's symbol
-let showSymbol = (e) => {
-  if(e.target.className === 'deck') return;
-  e.target.className += ' open show';
-};
-
-// Add the card to a *list* of "open" cards
-let addToCards = (e) => {
-  cards.push(e.target.childNodes[0].className);
-};
 
 // set up the event listener for a card. If a card is clicked
 deck.addEventListener('click', (e) => {
+    counter++;
+	//TODO: moves vs move
+	moves.innerText = counter;
+    console.log(counter);
 	showSymbol(e);
-    addToCards(e);
+    addToOpenedCards(e);
 });
 
-let restart = document.querySelector('.restart');
+
 restart.addEventListener('click', ()=> {
   window.location.reload();
 });
+
+/*
+ * 1. if (openedCards.length = 0 ){
+ *            addToOpenedCards();
+ *         }
+ * 2. else{
+ *          if (openedCards.includes(className)) {
+ *            addToOpenedCards();
+ *          } else {
+ *
+ *          }
+ *      }
+ */
+
+/*
+* Display moves on page
+*/
+
+
