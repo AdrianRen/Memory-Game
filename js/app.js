@@ -42,22 +42,54 @@ const cardList = [
 
       restart = document.querySelector('.restart'),
 
+      moves = document.querySelector('.moves'),
+
+      stars = document.querySelector('.stars'),
+
 	  // Display the card's symbol
       showSymbol = (e) => {
-          if(e.target.className === 'deck') return;
-          e.target.className += ' open show';
-      },
+          if (e.target.className === 'deck') {
+              return false;
+          } else if (e.target.className.includes(' open show')){
+              return false;
+          } else {
+			  e.target.className += ' open show';
+          }
+	  },
       // Add the card to a *list* of "open" cards
       addToOpenedCards = (e) => {
           let symbolClassName = e.target.childNodes[0].className;
           openedCards.push(symbolClassName);
-      };
+      },
 
-let moves = document.querySelector('.moves'),
+      movesCounter = (e) => {
+          if (e.target.className === 'card') {
+              counter += 1;
+              moves.innerText = counter;
+          }
+      },
 
-	starts = document.querySelector('.starts'),
+      starGenerator = (num) => {
+          stars.innerHTML='';
+          for (let i = 0; i < num; i++) {
+            const listItem = document.createElement('li');
+            const itemIcon = document.createElement('i');
+            itemIcon.setAttribute('class', 'fa fa-star');
+            stars.appendChild(listItem).appendChild(itemIcon);
+          }
+      },
 
-    openedCards = [],
+	  gameRating = () => {
+          if (counter <= 5) {
+			  starGenerator(3);
+          } else if (counter > 5 && counter <= 10) {
+			  starGenerator(2);
+          } else {
+			  starGenerator(1);
+          }
+	  };
+
+let openedCards = [],
 
     counter = 0;
 
@@ -68,11 +100,11 @@ let moves = document.querySelector('.moves'),
  *   - add each card's HTML to the page
  */
 
-for (let i of shuffledList) {
+for (let symbol of shuffledList) {
   const listItem = document.createElement('li');
   listItem.setAttribute('class', 'card');
   const itemIcon = document.createElement('i');
-  itemIcon.setAttribute('class', i);
+  itemIcon.setAttribute('class', symbol);
   deck.appendChild(listItem).appendChild(itemIcon);
 }
 
@@ -89,12 +121,11 @@ for (let i of shuffledList) {
 
 // set up the event listener for a card. If a card is clicked
 deck.addEventListener('click', (e) => {
-    counter++;
-	//TODO: moves vs move
-	moves.innerText = counter;
-    console.log(counter);
+	// e.stopPropagation();
+	movesCounter(e);
+	gameRating();
 	showSymbol(e);
-    addToOpenedCards(e);
+	addToOpenedCards(e);
 });
 
 
@@ -102,21 +133,5 @@ restart.addEventListener('click', ()=> {
   window.location.reload();
 });
 
-/*
- * 1. if (openedCards.length = 0 ){
- *            addToOpenedCards();
- *         }
- * 2. else{
- *          if (openedCards.includes(className)) {
- *            addToOpenedCards();
- *          } else {
- *
- *          }
- *      }
- */
-
-/*
-* Display moves on page
-*/
 
 
