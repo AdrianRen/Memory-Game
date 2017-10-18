@@ -46,6 +46,8 @@ const cardList = [
 
     stars = document.querySelector('.stars'),
 
+    stopWatch = document.querySelector('.stopWatch'),
+
     // Display the card's symbol
     showSymbol = (e) => {
       if (e.target.className === 'deck') {
@@ -68,23 +70,33 @@ const cardList = [
         counter <= 1 ? moves.innerText = `${counter} Move` : moves.innerText = `${counter} Moves`;
       }
     },
-    
+
     gameRating = () => {
       switch (counter) {
          case 6:
             stars.removeChild(stars.firstElementChild);
-            console.log(`case 6 called`);
             break;
          case 15:
         	  stars.removeChild(stars.firstElementChild);
-        	  console.log(`case 15 called`);
         	  break;
       }
+    },
+
+    onStopWatch = () => {
+
     };
 
 let openedCards = [],
 
-    counter = 0;
+    counter = 0,
+
+    duration,
+
+    minute,
+
+    second,
+
+    interval;
 
 /*
  * Display the cards on the page
@@ -120,7 +132,7 @@ deck.addEventListener('click', (e) => {
   showSymbol(e);
   addToOpenedCards(e);
 });
-console.log(moves.nextSibling);
+console.log(stopWatch.innerHTML);
 
 
 restart.addEventListener('click', () => {

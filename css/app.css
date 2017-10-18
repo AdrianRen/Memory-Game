@@ -95,7 +95,6 @@ h1 {
 
 .score-panel .stopWatch {
   float: left;
-  display: inline-block;
 }
 
 .score-panel .moves {
