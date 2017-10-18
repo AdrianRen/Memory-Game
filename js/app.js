@@ -1,93 +1,86 @@
 /*
-* Declaration
-*/
+ * Declaration
+ */
 
 const cardList = [
-  'fa fa-diamond',
-  'fa fa-diamond',
-  'fa fa-paper-plane-o',
-  'fa fa-paper-plane-o',
-  'fa fa-anchor',
-  'fa fa-anchor',
-  'fa fa-bolt',
-  'fa fa-bolt',
-  'fa fa-cube',
-  'fa fa-cube',
-  'fa fa-leaf',
-  'fa fa-leaf',
-  'fa fa-bicycle',
-  'fa fa-bicycle',
-  'fa fa-bomb',
-  'fa fa-bomb'
-],
+      'fa fa-diamond',
+      'fa fa-diamond',
+      'fa fa-paper-plane-o',
+      'fa fa-paper-plane-o',
+      'fa fa-anchor',
+      'fa fa-anchor',
+      'fa fa-bolt',
+      'fa fa-bolt',
+      'fa fa-cube',
+      'fa fa-cube',
+      'fa fa-leaf',
+      'fa fa-leaf',
+      'fa fa-bicycle',
+      'fa fa-bicycle',
+      'fa fa-bomb',
+      'fa fa-bomb'
+    ],
 
-      shuffle = (array) => {
-  let currentIndex = array.length,
-    temporaryValue, randomIndex;
+    shuffle = (array) => {
+      let currentIndex = array.length,
+        temporaryValue, randomIndex;
 
-  while (currentIndex !== 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
+      while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
 
-  return array;
-},
-      // Shuffle the list of cards using the provided "shuffle" method
-      shuffledList = shuffle(cardList),
+      return array;
+    },
+    // Shuffle the list of cards using the provided "shuffle" method
+    shuffledList = shuffle(cardList),
 
-      deck = document.querySelector('.deck'),
+    deck = document.querySelector('.deck'),
 
-      restart = document.querySelector('.restart'),
+    restart = document.querySelector('.restart'),
 
-      moves = document.querySelector('.moves'),
+    moves = document.querySelector('.moves'),
 
-      stars = document.querySelector('.stars'),
+    stars = document.querySelector('.stars'),
 
-	  // Display the card's symbol
-      showSymbol = (e) => {
-          if (e.target.className === 'deck') {
-              return false;
-          } else if (e.target.className.includes(' open show')){
-              return false;
-          } else {
-			  e.target.className += ' open show';
-          }
-	  },
-      // Add the card to a *list* of "open" cards
-      addToOpenedCards = (e) => {
-          let symbolClassName = e.target.childNodes[0].className;
-          openedCards.push(symbolClassName);
-      },
+    // Display the card's symbol
+    showSymbol = (e) => {
+      if (e.target.className === 'deck') {
+        return false;
+      } else if (e.target.className.includes(' open show')) {
+        return false;
+      } else {
+        e.target.className += ' open show';
+      }
+    },
+    // Add the card to a *list* of "open" cards
+    addToOpenedCards = (e) => {
+      let symbolClassName = e.target.childNodes[0].className;
+      openedCards.push(symbolClassName);
+    },
 
-      movesCounter = (e) => {
-          if (e.target.className === 'card') {
-              counter += 1;
-              moves.innerText = counter;
-          }
-      },
-
-      starGenerator = (num) => {
-          stars.innerHTML='';
-          for (let i = 0; i < num; i++) {
-            const listItem = document.createElement('li');
-            const itemIcon = document.createElement('i');
-            itemIcon.setAttribute('class', 'fa fa-star');
-            stars.appendChild(listItem).appendChild(itemIcon);
-          }
-      },
-
-	  gameRating = () => {
-          if (counter <= 5) {
-			  starGenerator(3);
-          } else if (counter > 5 && counter <= 10) {
-			  starGenerator(2);
-          } else {
-			  starGenerator(1);
-          }
-	  };
+    movesCounter = (e) => {
+      if (e.target.className === 'card') {
+        counter += 1;
+        counter <= 1 ? moves.innerText = `${counter} Move` : moves.innerText = `${counter} Moves`;
+      }
+    },
+    
+    gameRating = () => {
+      switch (counter) {
+         case 6:
+            stars.removeChild(stars.firstElementChild);
+            console.log(`case 6 called`);
+            break;
+         case 15:
+        	  stars.removeChild(stars.firstElementChild);
+        	  console.log(`case 15 called`);
+        	  break;
+      }
+    };
 
 let openedCards = [],
 
@@ -121,17 +114,15 @@ for (let symbol of shuffledList) {
 
 // set up the event listener for a card. If a card is clicked
 deck.addEventListener('click', (e) => {
-	// e.stopPropagation();
-	movesCounter(e);
-	gameRating();
-	showSymbol(e);
-	addToOpenedCards(e);
+  // e.stopPropagation();
+  movesCounter(e);
+  gameRating();
+  showSymbol(e);
+  addToOpenedCards(e);
 });
+console.log(moves.nextSibling);
 
 
-restart.addEventListener('click', ()=> {
+restart.addEventListener('click', () => {
   window.location.reload();
 });
-
-
-
