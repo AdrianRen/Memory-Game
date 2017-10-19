@@ -48,6 +48,16 @@ const cardList = [
 
     stopWatch = document.querySelector('.stopWatch'),
 
+    stopwatchMinute = document.querySelector('.minute'),
+
+    stopwatchSecond = document.querySelector('.second'),
+
+    modal = document.getElementById('myModal'),
+
+    btn = document.getElementById("myBtn"),
+
+    span = document.getElementsByClassName("close")[0]
+
     // Display the card's symbol
     showSymbol = (e) => {
       if (e.target.className === 'deck') {
@@ -82,21 +92,43 @@ const cardList = [
       }
     },
 
-    onStopWatch = () => {
-
+    startStopwatch = () => {
+      seconds++;
+      if (seconds > 59) {
+        seconds = 0;
+        minutes++;
+      }
+      stopwatchSecond.innerHTML = seconds > 9 ? seconds : "0" + seconds;
+      stopwatchMinute.innerHTML = minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00"
     };
 
 let openedCards = [],
 
     counter = 0,
 
-    duration,
+    seconds = 00,
 
-    minute,
-
-    second,
+    minutes = 00,
 
     interval;
+    // Modal is inspired by w3schools
+    // https://www.w3schools.com/howto/howto_css_modals.asp
+    // When the user clicks on the button, open the modal
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
 
 /*
  * Display the cards on the page
@@ -125,6 +157,11 @@ for (let symbol of shuffledList) {
  */
 
 // set up the event listener for a card. If a card is clicked
+
+// TODO: check is cards empty, true -> trigger the setInterval
+interval = setInterval(startStopwatch, 1000);
+
+
 deck.addEventListener('click', (e) => {
   // e.stopPropagation();
   movesCounter(e);
@@ -132,7 +169,7 @@ deck.addEventListener('click', (e) => {
   showSymbol(e);
   addToOpenedCards(e);
 });
-console.log(stopWatch.innerHTML);
+
 
 
 restart.addEventListener('click', () => {
