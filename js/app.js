@@ -75,8 +75,6 @@ showSymbol = (e) => {
       symbolID = e.target.childNodes[0].id;
       openedCards.push(symbolClassName);
       flippedCards.push(symbolID);
-      console.log(`symbolClassName: ${symbolClassName}`);
-      console.log(`symbolID: ${symbolID}`);
     }
   },
 
@@ -119,43 +117,32 @@ showSymbol = (e) => {
    */
   flipCards = (e) => {
     if (e.target.className !== 'deck' && openedCards.length < 2) {
+      showSymbol(e);
       if (openedCards.length == 0 && e.target.className !== 'deck') {
         addToOpenedCards(e);
-        console.log(`LINE: 121 openedCards.length == 0`);
-        console.log(openedCards);
       } else if (openedCards.length == 1 && e.target.className !== 'deck') {
         addToOpenedCards(e);
-        console.log(`openedCards: ${openedCards}`);
-        console.log(`openedCards[0]: ${openedCards[0]}`);
-        console.log(`openedCards[1]: ${openedCards[1]}`);
         if (openedCards[0] == openedCards[1]) {
           cardsFlipped += 2;
-          console.log(`cardsFlipped: ${cardsFlipped}`);
           openedCards = [];
           flippedCards = [];
           if (cardsFlipped == cardList.length) {
             modal.style.display = "block";
           }
-          console.log(`Equal`);
-          console.log(openedCards);
         } else {
           flipBack = () => {
             let card_1 = document.getElementById(flippedCards[0]),
-            card_2 = document.getElementById(flippedCards[1]);
+              card_2 = document.getElementById(flippedCards[1]);
 
             card_1.parentElement.classList.remove('open');
             card_1.parentElement.classList.remove('show');
             card_2.parentElement.classList.remove('open');
             card_2.parentElement.classList.remove('show');
+
             openedCards = [];
             flippedCards = [];
-          }
-
+          };
           setTimeout(flipBack, 700);
-
-          console.log(`NOT Equal`);
-          console.log(`openedCards: ${openedCards}`);
-          console.log(`flippedCards: ${flippedCards}`);
         }
       }
     }
@@ -163,17 +150,19 @@ showSymbol = (e) => {
 
 let openedCards = [],
 
-    flippedCards = [],
+  flippedCards = [],
 
-    counter = 0,
+  counter = 0,
 
-    seconds = 00,
+  seconds = 00,
 
-    minutes = 00,
+  minutes = 00,
 
-    cardsFlipped = 0,
+  cardsFlipped = 0,
 
-    interval;
+  interval,
+
+  gameStart = false;
 // Modal is inspired by w3schools
 // https://www.w3schools.com/howto/howto_css_modals.asp
 // When the user clicks on the button, open the modal
@@ -209,20 +198,17 @@ for (const [index, symbol] of shuffledList.entries()) {
   deck.appendChild(listItem).appendChild(itemIcon);
 }
 
-// TODO: check is cards empty, true -> trigger the setInterval
-if (counter > 0) {
-  interval = setInterval(startStopwatch, 1000);
-}
-
 deck.addEventListener('click', (e) => {
-  // e.stopPropagation();
+  if (!gameStart) {
+    gameStart = true;
+    interval = setInterval(startStopwatch, 1000);
+  };
   movesCounter(e);
   gameRating();
-  showSymbol(e);
   flipCards(e);
 });
 
 
 restart.addEventListener('click', () => {
-  window.location.reload();
+
 });
