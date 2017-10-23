@@ -8,23 +8,21 @@
   <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
   <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
   <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/animate.css">
 </head>
 
 <body>
-  <!-- Trigger/Open The Modal -->
-  <button id="myBtn">Open Modal</button>
-
+  <button id="myBtn">CLICK </button>
   <!-- The Modal -->
   <div id="myModal" class="modal">
-
     <!-- Modal content -->
     <div class="modal-content">
       <span class="close">&times;</span>
       <h1>Congratulations</h1>
-      <p>Moves:</p>
-      <p>Time:</p>
-      <p>Game Rating:</p>
-      <button class="restart">Play Again</button>
+      <p id="modal_moves">Moves:</p>
+      <p id="modal_time">Time:</p>
+      <p id="modal_rating">Game Rating: &starf;&starf;&starf;</p>
+      <button class="restart" id="modal_restart">Play Again</button>
     </div>
 
   </div>
@@ -49,7 +47,7 @@
       <span class="moves">0 Move</span>
 
       <div class="restart">
-        <i class="fa fa-repeat"></i>
+        <i class="fa fa-repeat" id="btn_restart"></i>
       </div>
     </section>
 
