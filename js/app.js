@@ -1,7 +1,12 @@
 /*
  * Declaration
+ * TODO: Please create your own README
+ * TODO: More comments required.
+ * TODO: Responsive Design
+ *
  */
 
+// A list holds all cards
 const cardList = [
     'fa fa-diamond',
     'fa fa-diamond',
@@ -83,6 +88,9 @@ const cardList = [
     deck.appendChild(listItem).appendChild(itemIcon);
   }},
 
+  /*
+   * TODO: toggle jQuery
+   */
   // Display the card's symbol
   showSymbol = (e) => {
     if (e.target.className === 'deck') {
@@ -103,6 +111,13 @@ const cardList = [
     }
   },
 
+  /*
+   *
+   *
+   * TODO: Your game counts every click on every card but the moves should be calculated by increasing the count per each flipped pair of cards and not each card or click. Please fix and resubmit.
+   *
+   *
+   */
   movesCounter = (e) => {
     if (e.target.className === 'card') {
       counter += 1;
@@ -110,6 +125,13 @@ const cardList = [
     }
   },
 
+/*
+ *
+ *
+ * TODO: Star rating should go from 3 to 1 but in your case goes from 3 to zero which is incorrect.
+ *
+ *
+ */
   gameRating = () => {
     switch (counter) {
       case 6:
@@ -220,9 +242,9 @@ window.onload = generateCards();
 
 // When the user clicks on <span> (x), close the modal
 
-btn.onclick = () => {
-  modal.style.display = "block";
-}
+// btn.onclick = () => {
+//   modal.style.display = "block";
+// }
 
 span.onclick = function() {
   modal.style.display = "none";
