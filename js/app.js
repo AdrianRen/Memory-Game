@@ -5,21 +5,7 @@
  * TODO: Responsive Design
  *
  */
-$("#modal").iziModal();
 
-$(document).on('click', '.open-options', function(event) {
-  event.preventDefault();
-  $('#modal-options').iziModal('open');
-});
-
-$('#modal-options').iziModal({
-  headerColor: '#26A69A',
-  width: '50%',
-  overlayColor: 'rgba(0, 0, 0, 0.5)',
-  fullscreen: true,
-  transitionIn: 'fadeInUp',
-  transitionOut: 'fadeOutDown'
-});
  /*
   * A List of Cards
   */
@@ -155,12 +141,21 @@ function winningCheck() {
 };
 
 /*
- * show modal when all cards matched
+ * iziModal
  */
-function showModal() {
-  clearInterval(stopwatch);
-  alert('HELL NO!!!');
-}
+
+
+$("#modal").iziModal();
+
+$('#modal-options').iziModal({
+ headerColor: '#02ccba',
+ width: '40%',
+ overlayColor: 'rgba(0, 0, 0, 0.5)',
+ fullscreen: true,
+ transitionIn: 'fadeInUp',
+ transitionOut: 'fadeOutDown'
+});
+
 
 /*
  * Moves Counter
@@ -220,12 +215,33 @@ function startStopwatch() {
   $('.minute').html(minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00");
 };
 
+
+
+ /*
+  * show modal when all cards matched
+  */
+function showModal() {
+  clearInterval(stopwatch);
+  let gameInfo = `
+     <h3>Time</h3>
+     <p>${minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00"}:${seconds > 9 ? seconds : "0" + seconds}</p>
+     <h3>Stars</h3>
+       <span><i class="fa fa-star"></i></span>
+       <span><i class="fa ${ (counter > 20) ? "fa-star-o" : "fa-star"}"></i></span>
+       <span><i class="fa ${ (counter > 12) ? "fa-star-o" : "fa-star"}"></i></span>
+     <h3>Moves</h3>
+     <p>${counter}</p>
+     <button class="restart">PLAY AGAIN</button>`;
+  $('#result').append(gameInfo);
+  $('.restart').click(resetGame);
+  $('#modal-options').iziModal('open');
+};
+
 /*
  * Reset game by clicking the restart icon
  */
 
  $('.restart').click(resetGame);
-
  function resetGame() {
    window.location.reload(true);
  }
