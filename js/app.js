@@ -66,7 +66,9 @@ let gameStarted = false;
 let openedCards = [];
 let stopwatch;
 // TODO: Testing
+
 $('.card').click(flipCards);
+
 function flipCards() {
   // Intial check game status. If game is NOT started -> start stopwatch
   if (gameStarted == false) {
@@ -111,8 +113,10 @@ function matchCheck() {
   let secondCard = openedCards[1][0].firstChild.className;
   if (firstCard == secondCard) {
     console.log(`Cards are matched`);
-    openedCards[0].addClass('match');
-    openedCards[1].addClass('match');
+    openedCards[0].removeClass('animated flipInY').addClass('animated rubberBand match');
+    openedCards[1].removeClass('animated flipInY').addClass('animated rubberBand match');
+    // openedCards[0].addClass('animated bounce match');
+    // openedCards[1].addClass('animated bounce match');
     disableClick();
     emptyOpenedCards();
     setTimeout(winningCheck, 300);
