@@ -6,10 +6,7 @@
  *
  */
 
-let counter = 0,
-    cardsMatched = 0,
-    gameStarted = false,
-    openedCards = [];
+let cardsMatched = 0;
  /*
   * A List of Cards
   */
@@ -55,12 +52,77 @@ function shuffle(array) {
 })();
 
 /*
- * 
+ * cards manipulation
  */
-$('.card').click(function() {
-  $(this).addClass('open show animated flipInY');
-})
 
+let gameStarted = false;
+let openedCards = [];
+$('.card').click(flipCards);
+function flipCards() {
+  // Intial check game status. If game is NOT started -> start stopwatch
+  if (gameStarted == false) {
+    gameStarted = true;
+    setInterval(startStopwatch,1000);
+  }
+
+  if (openedCards.length === 0) {
+    $(this).toggleClass('open show animated flipInY');
+    openedCards.push($(this));
+    disableClick();
+  } else if(openedCards.length === 1){
+    // increment moves
+    movesCounter();
+    $(this).toggleClass('open show animated flipInY');
+    openedCards.push($(this));
+    setTimeout(matchCheck, 900)
+  }
+};
+
+/*
+ * Disable click feature on opened cards
+ */
+function disableClick() {
+  openedCards.forEach(card => card.off('click'));
+}
+
+ /*
+  * Enable click feature on opened cards
+  */
+
+function enableClick() {
+  openedCards[0].click(flipCards);
+}
+
+/*
+ * Check if the two opened cards are matching
+ */
+
+function matchCheck() {
+  let firstCard = openedCards[0][0].firstChild.className;
+  let secondCard = openedCards[1][0].firstChild.className;
+  if (firstCard == secondCard) {
+    console.log(`Cards are matched`);
+    openedCards[0].addClass('match');
+    openedCards[1].addClass('match');
+    disableClick();
+    emptyOpenedCards();
+    winningCheck();
+  } else {
+    openedCards[0].toggleClass('open show');
+    openedCards[1].toggleClass('open show');
+    enableClick();
+    emptyOpenedCards();
+    console.log(openedCards);
+  }
+};
+
+function emptyOpenedCards() {
+  openedCards = [];
+}
+
+function winningCheck() {
+
+}
 //
 //   /*
 //    * TODO: toggle jQuery
@@ -93,10 +155,16 @@ $('.card').click(function() {
 //    *
 //    *
 //    */
-  function movesCounter() {
-      counter += 1;
-      counter <= 1 ? $('.moves').html('${counter} Move') : $('.moves').html('${counter} Moves');
-  };
+
+/*
+ * Moves Counter
+ */
+
+let counter = 0;
+function movesCounter() {
+    counter += 1;
+    counter <= 1 ? $('.moves').html(`${counter} Move`) : $('.moves').html(`${counter} Moves`);
+};
 //
 // /*
 //  *
@@ -118,15 +186,21 @@ $('.card').click(function() {
 //     }
 //   }
 //
-//   let startStopwatch = () => {
-//     seconds++;
-//     if (seconds > 59) {
-//       seconds = 0;
-//       minutes++;
-//     }
-//     stopwatchSecond.innerHTML = seconds > 9 ? seconds : "0" + seconds;
-//     stopwatchMinute.innerHTML = minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00"
-//   };
+
+/*
+ * Stopwatch function
+ */
+let seconds = 0;
+let minutes = 0;
+function startStopwatch() {
+  seconds++;
+  if (seconds > 59) {
+    seconds = 0;
+    minutes++;
+  }
+  $('.second').html(seconds > 9 ? seconds : "0" + seconds);
+  $('.minute').html(minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00");
+};
 //   /*
 //    * set up the event listener for a card. If a card is clicked:
 //    *  DONE - display the card's symbol (put this functionality in another function that you call from this one)
