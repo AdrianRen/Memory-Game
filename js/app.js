@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 /*
  *
  * TODO: Please create your own README
@@ -59,13 +60,27 @@ function shuffle(array) {
  */
 
 /*
+ *  Animate CSS, this funciton extends jQuery to add a function for animation 
+ *  https://github.com/daneden/animate.css/blob/master/README.md
+ */  
+
+$.fn.extend({
+  animateCss: function (animationName) {
+    var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+    this.addClass('animated ' + animationName).one(animationEnd, function () {
+      $(this).removeClass('animated ' + animationName);
+    });
+    return this;
+  }
+});
+
+/*
  * cards manipulation
  */
 
 let gameStarted = false;
 let openedCards = [];
 let stopwatch;
-// TODO: Testing
 
 $('.card').click(flipCards);
 
@@ -77,15 +92,15 @@ function flipCards() {
   }
 
   if (openedCards.length === 0) {
-    $(this).toggleClass('open show animated flipInY');
+    $(this).toggleClass('open show').animateCss('flipInY');
     openedCards.push($(this));
     disableClick();
   } else if(openedCards.length === 1){
     // increment moves
     movesCounter();
-    $(this).toggleClass('open show animated flipInY');
+    $(this).toggleClass('open show').animateCss('flipInY');
     openedCards.push($(this));
-    setTimeout(matchCheck, 900)
+    setTimeout(matchCheck, 1200);
   }
 };
 
@@ -112,17 +127,14 @@ function matchCheck() {
   let firstCard = openedCards[0][0].firstChild.className;
   let secondCard = openedCards[1][0].firstChild.className;
   if (firstCard == secondCard) {
-    console.log(`Cards are matched`);
-    openedCards[0].removeClass('animated flipInY').addClass('animated rubberBand match');
-    openedCards[1].removeClass('animated flipInY').addClass('animated rubberBand match');
-    // openedCards[0].addClass('animated bounce match');
-    // openedCards[1].addClass('animated bounce match');
+    openedCards[0].addClass("match").animateCss('pulse');
+    openedCards[1].addClass("match").animateCss('pulse');
     disableClick();
     emptyOpenedCards();
     setTimeout(winningCheck, 300);
   } else {
-    openedCards[0].toggleClass('open show animated flipInY');
-    openedCards[1].toggleClass('open show animated flipInY');
+    openedCards[0].toggleClass("show open").animateCss('flipInY');
+    openedCards[1].toggleClass("show open").animateCss('flipInY');
     enableClick();
     emptyOpenedCards();
   }
@@ -145,12 +157,14 @@ function winningCheck() {
 };
 
 /*
- * iziModal
+ * iziModal jQuery Plugin
+ * http://izimodal.marcelodolce.com/
  */
 
-
+// Plugin Initializing 
 $("#modal").iziModal();
 
+// Modal customizing 
 $('#modal-options').iziModal({
  headerColor: '#02ccba',
  width: '40%',
@@ -217,12 +231,12 @@ function startStopwatch() {
   }
   $('.second').html(seconds > 9 ? seconds : "0" + seconds);
   $('.minute').html(minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00");
-};
+}
 
 
 
  /*
-  * show modal when all cards matched
+  * Show modal when all cards matched
   */
 function showModal() {
   clearInterval(stopwatch);
@@ -239,7 +253,7 @@ function showModal() {
   $('#result').append(gameInfo);
   $('.restart').click(resetGame);
   $('#modal-options').iziModal('open');
-};
+}
 
 /*
  * Reset game by clicking the restart icon

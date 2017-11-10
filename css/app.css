@@ -169,3 +169,69 @@ h1 {
   text-align: center;
   line-height:1.6;
 }
+
+/* Responsive Design */
+
+@media only screen and (max-width : 450px) {
+    body {
+        font-size: 12px;
+    }
+    .container {
+        margin: 0 auto;
+        width: 375px;
+    }
+    .game-title {
+        font-size: 35px;
+    }
+
+    .score-panel {
+        width: 50%;
+    }
+    .score-panel-item {
+        font-weight: bold;
+        margin: 2px;
+    }
+    .score-panel .stars li {
+        font-size: 12px;
+    }
+    .fa-repeat {
+        font-size: 12px;
+    }
+    .deck {
+        margin: 0 auto;
+        width: 100%;
+        height: 320px;
+        min-height: 500px;
+        box-shadow: none;
+    }
+    .deck .card {
+        height: 75px;
+        width: 75px;
+    }
+}
+
+@media only screen and (min-width: 451px) and (max-width : 700px) {
+    .container {
+        margin: 0 auto;
+        width: 450px;
+    }
+    .score-panel-item {
+        font-weight: bold;
+        font-size: 15px;
+        margin: 2px;
+    }
+    .fa-repeat {
+        font-size: 20px;
+    }
+    .deck {
+        margin: 0 auto;
+        width: 100%;
+        height: 320px;
+        min-height: 500px;
+        box-shadow: none;
+    }
+    .deck .card {
+        height: 82px;
+        width: 82px;
+    }
+}
